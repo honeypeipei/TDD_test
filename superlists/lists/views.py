@@ -15,3 +15,9 @@ def new_list(request):
 	list_ = List.objects.create()
 	Item.objects.create(text = request.POST['item_text'], list = list_)
 	return redirect(f'/lists/{list_.id}/')
+
+def add_item(request, list_id):
+	#视图保存新建的待办事项mkae it save our new list item
+	list_ = List.objects.get(id = list_id)
+	Item.objects.create(text = request.POST['item_text'], list = list_)
+	return redirect(f'/lists/{list_.id}/')  
