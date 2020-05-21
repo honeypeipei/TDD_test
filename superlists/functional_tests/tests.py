@@ -41,13 +41,17 @@ class NewVisitorTest(LiveServerTestCase):
 
 
 		inputbox.send_keys('Buy peacock feathers')
+		time.sleep(3)
 
 		inputbox.send_keys(Keys.ENTER)
+		time.sleep(2)
 		self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Use peacock feathers to make a fly')
+		time.sleep(3)
 		inputbox.send_keys(Keys.ENTER)
+		time.sleep(2)
 
 		self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
 		self.wait_for_row_in_list_table('1: Buy peacock feathers')
@@ -57,7 +61,9 @@ class NewVisitorTest(LiveServerTestCase):
 		self.browser.get(self.live_server_url)
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Buy peacock feathers')
+		time.sleep(3)
 		inputbox.send_keys(Keys.ENTER)
+		time.sleep(2)
 		self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
 		edith_list_url = self.browser.current_url
@@ -73,7 +79,9 @@ class NewVisitorTest(LiveServerTestCase):
 
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		inputbox.send_keys('Buy milk')
+		time.sleep(3)
 		inputbox.send_keys(Keys.ENTER)
+		time.sleep(2)
 		self.wait_for_row_in_list_table('1: Buy milk')
 
 		francis_list_url = self.browser.current_url
