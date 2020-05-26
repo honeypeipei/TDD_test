@@ -10,35 +10,35 @@ def home_page(request):
 
 def view_list(request, list_id):
 	list_ = List.objects.get(id = list_id)
-	error = None
-
+	form = ItemForm()
 	#handle two types of request
 	if request.method == 'POST':
-		try:
-			item = Item(text = request.POST['text'], list = list_)
-			item.full_clean()
-			item.save()
+		form = ItemForm(data = request.POST)
+		if form.is_valid():
+			Item.objects.create(text = request.POST['text'], list = list_)
 			return redirect(list_)
-		except ValidationError:
-			error = "You can't have an empty list item"
-
-	return render(request, 'list.html', {'list':list_, 'error': error})
+	return render(request, 'list.html', {'list':list_, "form": form})
 
 def new_list(request):
-	list_ = List.objects.create()
-	item = Item.objects.create(text = request.POST['text'], list = list_)
-	try:
-		item.full_clean()
-		item.save()
-	except ValidationError:
-		list_.delete()
-		error = "You can't have an empty list item"
-		return render(request, 'home.html',{"error":error})
-	# return redirect(f'/lists/{list_.id}/')
-	# Using get_absolute_url for Redirects
-	# return redirect('view_list', list_.id)
-	#在视图中使用get_absolute_url函数，把重定向的目标对象传给redirect函数，redirect函数自动调用get_absolute_url函数
-	return redirect(list_)
+	form = ItemForm(data = request.POST)
+	if form.is_valid():
+		list_ = List.objects.create()
+		Item.objects.create(text = request.POST['text'], list = list_)
+		return redirect(list_)
+	else:
+		return render(request, 'home.html', {"form":form})
+	# try:
+	# 	item.full_clean()
+	# 	item.save()
+	# except ValidationError:
+	# 	list_.delete()
+	# 	error = "You can't have an empty list item"
+	# 	return render(request, 'home.html',{"error":error})
+	# # return redirect(f'/lists/{list_.id}/')
+	# # Using get_absolute_url for Redirects
+	# # return redirect('view_list', list_.id)
+	# #在视图中使用get_absolute_url函数，把重定向的目标对象传给redirect函数，redirect函数自动调用get_absolute_url函数
+	# return redirect(list_)
 
 #delete the add_item view
 # def add_item(request, list_id):
