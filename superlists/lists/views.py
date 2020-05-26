@@ -17,7 +17,7 @@ def view_list(request, list_id):
 			item = Item(text = request.POST['item_text'], list = list_)
 			item.full_clean()
 			item.save()
-			return redirect(f'/lists/{list_.id}/')
+			return redirect(list_)
 		except ValidationError:
 			error = "You can't have an empty list item"
 
@@ -33,7 +33,11 @@ def new_list(request):
 		list_.delete()
 		error = "You can't have an empty list item"
 		return render(request, 'home.html',{"error":error})
-	return redirect(f'/lists/{list_.id}/')
+	# return redirect(f'/lists/{list_.id}/')
+	# Using get_absolute_url for Redirects
+	# return redirect('view_list', list_.id)
+	#在视图中使用get_absolute_url函数，把重定向的目标对象传给redirect函数，redirect函数自动调用get_absolute_url函数
+	return redirect(list_)
 
 #delete the add_item view
 # def add_item(request, list_id):
