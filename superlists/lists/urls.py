@@ -20,8 +20,8 @@ from lists import views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('new',views.new_list),
-    re_path(r'^(\d+)/$',views.view_list),
+    path('new',views.new_list, name = 'new_list'),
+    re_path(r'^(\d+)/$',views.view_list, name = 'view_list'),
     #delete add_item view后，need delete referred
     # re_path(r'^(\d+)/add_item$',views.add_item)
 ]
