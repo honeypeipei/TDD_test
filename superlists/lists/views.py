@@ -9,6 +9,11 @@ def home_page(request):
 
 def view_list(request, list_id):
 	list_ = List.objects.get(id = list_id)
+
+	#handle two types of request
+	if request.method == 'POST':
+		Item.objects.create(text = request.POST['item_text'], list = list_)
+		return redirect(f'/lists/{list_.id}/')
 	return render(request, 'list.html', {'list':list_})
 
 def new_list(request):
@@ -23,8 +28,9 @@ def new_list(request):
 		return render(request, 'home.html',{"error":error})
 	return redirect(f'/lists/{list_.id}/')
 
-def add_item(request, list_id):
-	#视图保存新建的待办事项mkae it save our new list item
-	list_ = List.objects.get(id = list_id)
-	Item.objects.create(text = request.POST['item_text'], list = list_)
-	return redirect(f'/lists/{list_.id}/')  
+#delete the add_item view
+# def add_item(request, list_id):
+# 	#视图保存新建的待办事项mkae it save our new list item
+# 	list_ = List.objects.get(id = list_id)
+# 	Item.objects.create(text = request.POST['item_text'], list = list_)
+# 	return redirect(f'/lists/{list_.id}/')  

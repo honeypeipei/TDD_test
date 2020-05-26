@@ -22,5 +22,6 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('new',views.new_list),
     re_path(r'^(\d+)/$',views.view_list),
-    re_path(r'^(\d+)/add_item$',views.add_item)
+    #delete add_item view后，need delete referred
+    # re_path(r'^(\d+)/add_item$',views.add_item)
 ]
