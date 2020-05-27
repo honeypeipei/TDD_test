@@ -136,10 +136,10 @@ class NewListTest(TestCase):
 		self.assertRedirects(response, f'/lists/{new_list.id}/')
 
     #new unit test to make sure that empty list items don't get saved
-	# def test_invalid_list_items_arrent_saved(self):
-	# 	self.client.post('/lists/new',data = { 'text' : '' })
-	# 	self.assertEqual(List.objects.count(), 0)
-	# 	self.assertEqual(Item.objects.count(), 0)
+	def test_invalid_list_items_arrent_saved(self):
+		self.client.post('/lists/new',data = { 'text' : '' })
+		self.assertEqual(List.objects.count(), 0)
+		self.assertEqual(Item.objects.count(), 0)
 
 
 	def test_for_invalid_input_renders_home_template(self):
